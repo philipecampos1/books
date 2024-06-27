@@ -1,0 +1,24 @@
+{% extends '_base.html' %}
+{% load static %}
+
+{% block title %}Home{% endblock title %}
+
+{% block content %}
+    <h1>Homepage</h1>
+    <form action="{% url 'search_results' %}" class="form-inline mt-2 mt-md-0 " method="get">
+        <input type="text" name="q" class="form-control mr-sm-2" placeholder="Search" aria-label="Search">
+    </form>
+    
+    {% if user.is_authenticated %}
+        Hi {{ user.email }}!
+        <form id="logout-form" method="post" action="{% url 'account_logout' %}">
+            {% csrf_token %}
+            <button type="submit">Log Out</button>
+        </form>
+    {% else %}
+        <p>You are not logged in</p>
+        <a href="{% url 'account_login' %}">Log in</a>
+        <a href="{% url 'account_signup' %}">Sign Up</a>
+    {% endif %}
+
+{% endblock content %}
